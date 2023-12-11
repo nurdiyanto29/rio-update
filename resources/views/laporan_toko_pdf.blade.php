@@ -95,6 +95,7 @@
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
                 <th>Jenis</th>
+                <th>Harga Jual</th>
            
                 <th>Stok Toko</th>
             </tr>
@@ -113,6 +114,7 @@
                         <td>{{ $items->barang->kode_barang ?? "" }}</td>
                         <td>{{ $items->barang->nama ?? "" }}</td>
                         <td>{{ $items->barang->jenis->nama ?? "" }}</td>
+                        <td>@currency($dt->harga_jual ?? 0)</td>
                        
                         <td>{{ $items->stok }} {{ $items->barang->satuan->parent->nama ?? $items->barang->satuan->nama }}</td>
                         

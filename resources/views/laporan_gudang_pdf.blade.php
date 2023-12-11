@@ -95,6 +95,7 @@
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
                 <th>Jenis</th>
+                <th>Harga Beli</th>
                 <th>Stok Gudang</th>
             </tr>
         </thead>
@@ -112,6 +113,8 @@
                         <td>{{ $items->barang->kode_barang ?? "" }}</td>
                         <td>{{ $items->barang->nama ?? "" }}</td>
                         <td>{{ $items->barang->jenis->nama ?? "" }}</td>
+                        <td> {{nominal($dt->harga_beli ?? 0)}}</td>
+
                         <td>{{ $items->stok }} {{ $items->satuan->child->nama ?? $items->barang->satuan->nama }}</td>
                         
                     </tr>
