@@ -21,11 +21,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Data Barang</h3>
+                                <h3 class="card-title" style="text-align: center">Data Barang</h3>
                                 <div class="form-group">
                                     @if (Auth::user()->role != 'Pemilik')
                                         <button class="btn btn-primary btn-sm float-right"
-                                            onclick="window.location='{{ url('barang/create') }}'" type="button">
+                                            onclick="window.location='{{ url('barang/create') }}'" type="button"
+                                            style="background: ">
                                             <i class="fas fa-plus"></i> Tambah
                                         </button>
                                     @endif
@@ -64,19 +65,22 @@
                                                     {{ $dt->satuan->kelipatan ?? '' }}
                                                     {{ $dt->satuan->parent->nama ?? $dt->satuan->nama }} di Toko</td>
                                                 <td> @currency($dt->harga_satuan)</td>
-                                                <td>{{$dt->stok_awal}}</td>
-                                                <td>{{tgl_s($dt->kadaluarsa)}}</td>
+                                                <td>{{ $dt->stok_awal }}</td>
+                                                <td>{{ tgl_s($dt->kadaluarsa) }}</td>
                                                 <td style="text-align: center"> <a href="#"
                                                         class="nav-link has-dropdown" data-toggle="dropdown"><i
                                                             class="fa fa-ellipsis-h " style="color: #777778"></i></a>
                                                     <ul class="dropdown-menu">
                                                         @if (Auth::user()->role != 'Pemilik')
-                                                        <li><a class="nav-link" id="edit-data"
-                                                                href="{{ route('barang.edit', $dt->id) }}">Edit</a></li>
-                                                        <li> <a href="#" id="delete-data" data-id={{ $dt->id }}
-                                                                data-nama={{ $dt->nama }} class="nav-link"
-                                                                data-toggle="modal" data-target="#deleteModal">Delete</a>
-                                                        </li>
+                                                            <li><a class="nav-link" id="edit-data"
+                                                                    href="{{ route('barang.edit', $dt->id) }}">Edit</a>
+                                                            </li>
+                                                            <li> <a href="#" id="delete-data"
+                                                                    data-id={{ $dt->id }}
+                                                                    data-nama={{ $dt->nama }} class="nav-link"
+                                                                    data-toggle="modal"
+                                                                    data-target="#deleteModal">Delete</a>
+                                                            </li>
                                                         @endif
                                                         <li><a class="nav-link" id="edit-data"
                                                                 href="{{ url('kartu?_idd=' . $dt->id) }}">Kartu

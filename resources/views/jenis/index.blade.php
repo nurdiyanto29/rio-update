@@ -14,6 +14,13 @@
             height: 37px !important;
 
         }
+        .card-title {
+  float: left;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+}
     </style>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
