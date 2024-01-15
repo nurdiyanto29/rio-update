@@ -95,7 +95,7 @@
                 <th></th>
                 <th colspan="3">Masuk</th>
                 <th colspan="3">Keluar</th>
-                <th colspan="3">Balance</th>
+                <th colspan="4">Balance</th>
             </tr>
             <tr>
                 <th>Tanggal Waktu</th>
@@ -110,6 +110,8 @@
                 <th>Jumlah</th>
 
                 <th>Unit</th>
+                <th>Satuan</th>
+
                 <th>Harga/@</th>
                 <th>Jumlah</th>
 
@@ -120,8 +122,13 @@
             @php
                 $unit = 0;
                 $total = 0;
+                $total_a = 0;
                 $s_unit = $barang->stok_awal;
                 $s_a = $barang->harga_satuan;
+
+                $hpp = 0;
+                $hpp_r = 0;
+
             @endphp
             <tr>
                 <td>-</td>
@@ -134,7 +141,10 @@
                 <td></td>
                 <td></td>
                 <td>{{ $unit += $s_unit }}</td>
+                <td>{{ $barang->satuan->nama ?? '' }}</td>
                 @php
+                    $total_a += $s_a * $unit;
+
                     $total += $s_a * $unit;
                 @endphp
                 <td>@currency($s_a)</td>
@@ -142,7 +152,8 @@
             </tr>
             {{-- @dd($unit); --}}
             @foreach ($saldo as $item)
-            @if ($item['jumlah_keluar'])
+                {{-- @dd($item) --}}
+                @if ($item['jumlah_keluar'])
                     <tr>
                         <td>{{ tgl($item['tanggal']) }}</td>
                         <td>Penjualan</td>
@@ -154,11 +165,11 @@
                         <td>@currency($item['total_keluar'])</td>
 
                         <td>{{ $unit -= $item['jumlah_keluar'] }}</td>
+                        <td>{{ $barang->satuan->nama ?? '' }}</td>
 
-                        
                         @php
                             // $total = $unit * $item['hs_keluar'];
-                            $total = $total-$item['total_keluar']
+                            $total = $total - $item['total_keluar'];
                         @endphp
                         {{-- @dd($total) --}}
                         @if ($unit)
@@ -181,8 +192,12 @@
                         <td></td>
                         <td></td>
                         <td>{{ $unit += $item['jumlah_masuk'] }}</td>
+
+                        <td>{{ $barang->satuan->nama ?? '' }}</td>
+
                         @php
                             $total += $item['total_masuk'];
+                            $hpp += $item['total_masuk'];
                         @endphp
                         @if ($unit)
                             <td>@currency($total / $unit)</td>
@@ -192,7 +207,7 @@
                         <td>@currency($total)</td>
                     </tr>
                 @endif
-                
+
                 @if ($item['jumlah_rj'])
                     <tr>
                         <td>{{ tgl($item['tanggal']) }}</td>
@@ -205,8 +220,10 @@
                         <td></td>
 
                         <td>{{ $unit += $item['jumlah_rj'] }}</td>
+                        <td>{{ $barang->satuan->nama ?? '' }}</td>
+
                         @php
-                         $total = $total+$item['total_rj']
+                            $total = $total + $item['total_rj'];
                             // $total = $unit * $item['hs_rj'];
                         @endphp
                         @if ($unit)
@@ -229,7 +246,10 @@
                         <td>@currency($item['total_rb'])</td>
 
                         <td>{{ $unit -= $item['jumlah_rb'] }}</td>
+                        <td>{{ $barang->satuan->nama ?? '' }}</td>
+
                         @php
+                            $hpp_r += $item['total_rb'];
                             $total = $total - $item['total_rb'];
                         @endphp
                         @if ($unit)
@@ -243,6 +263,46 @@
             @endforeach
         </tbody>
     </table>
+    <div style="margin-top: 30px">
+        <table>
+            <tr>
+                <td style="text-align: right"> <strong> Pembelian =</strong></td>
+                <td>Jumlah Pembelian - Jumlah Retur Pembelian</td>
+                {{-- <td>  {{$hpp}} xxx {{$hpp_r}}</td> --}}
+            </tr>
+            <tr>
+                <td style="text-align:right">=</td>
+                <td style="text-align: left">
+                    @currency( $hpp) - @currency( $hpp_r)
+                </td>
+            </tr>
+            <tr>
+                @php
+                    $hpp_total = $hpp - $hpp_r;
+                @endphp
+                <td style="text-align:right">=</td>
+                <td style="text-align: left">
+                    @currency($hpp_total) 
+                </td>
+            </tr>
+
+
+            <tr>
+                <td style="text-align: right"> <strong> HPP =</strong></td>
+                <td>Persedian + Pembelian - Persediaan Akhir</td>
+
+            </tr>
+
+            <tr>
+                <td style="text-align: right"> <strong>=</strong></td>
+                <td style="text-align: left"> @currency( $total_a)  +  @currency($hpp_total)  -  @currency($total)  </td>
+            </tr>
+            <tr>
+                <td style="text-align: right"> <strong>=</strong></td>
+                <td> @currency($total_a + $hpp_total - $total) </td>
+            </tr>
+        </table>
+    </div>
 
 
 </body>

@@ -40,6 +40,7 @@ Route::group(['middleware' => ['cekrole:Pegawai Toko,Pegawai Gudang,Pemilik']], 
 
     
     Route::get('/kartu', [KartuPersediaanController::class, 'kartu'])->name('kartu.kartu');
+    Route::get('/kartu/index', [KartuPersediaanController::class, 'index'])->name('kartu.indexx');
 
 
 
