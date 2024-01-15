@@ -70,6 +70,8 @@
                                                         <input type="text" class="form-control" id="nama" disabled
                                                             placeholder="Nama Barang">
                                                     </div>
+                                                    <input type="hidden" class="form-control inpt" id="satuan"
+                                                    placeholder="satuan" disabled>
 
                                                 </div>
                                                 <div class="row">
@@ -98,6 +100,7 @@
                                                                 <th>Kode</th>
                                                                 <th>Jumlah</th>
                                                                 <th>Harga</th>
+                                                                <th>Satuan</th>
                                                                 <th>Total Harga</th>
                                                                 <th><i class="fas fa-cog"></i></th>
                                                             </tr>
@@ -153,6 +156,7 @@
                 $("#stok").val("");
                 $("#nama").val("");
                 $("#harga").val("");
+                $("#satuan").val("");
                 let id = $(this).val();
                 $.ajax({
                     type: 'GET',
@@ -170,6 +174,9 @@
                             $('#harga').val(
                                 `${element['harga_jual']}`
                             );
+                            $('#satuan').val(
+                                `${element['satuan']}`
+                            );
 
                         });
                     }
@@ -184,6 +191,9 @@
                 var nama = $('#nama').val();
                 var nama_barang = $('#nama_barang').val();
                 var harga = $('#harga').val();
+                var satuan = $('#satuan').val();
+
+                console.log(satuan);
 
                 var cek = jumlah <= stok ? true : false;
 
@@ -196,6 +206,7 @@
                                 <td>${kode_barang} </td>
                                 <td> <input type="hidden" readonly  class="kodein" name="jumlah[]" value="${jumlah}">${jumlah} </td>
                                 <td> <input type="hidden" readonly  class="kodein" name="harga[]" value="${harga}">${harga} </td>
+                                <td>${satuan} </td>
                                 <td> <input type="hidden" readonly  class="kodein" name="total[]" value="${harga*jumlah}">${harga*jumlah} </td>
                                 <td><span class="btn btn-sm btn-warning btn-delete"> <span class="fa fa-trash"></span> </span></td>
                             </tr>`);
@@ -205,6 +216,7 @@
                     $("#stok").val("");
                     $("#nama").val("");
                     $("#harga").val("");
+                    $("#satuan").val("");
                     $('#id_barang').val($('select option:first').val()).trigger('change');
 
                 } else {

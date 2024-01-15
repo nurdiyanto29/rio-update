@@ -35,8 +35,9 @@
             <tr align='center'>
                 <td width='10%'>Kode Barang</td>
                 <td width='20%'>Nama Barang</td>
-                <td width='13%'>Harga</td>
+                <td width='8%'>Harga</td>
                 <td width='4%'>Qty</td>
+                <td width='4%'>satuan</td>
                 <td width='13%'>Total Harga</td>
                 @php
                     $total = 0;
@@ -48,13 +49,14 @@
                     <td>{{$item->barang->nama}}</td>
                     <td>@currency($item->harga_satuan)</td>
                     <td>{{$item->jumlah}}</td>
+                    <td>{{$item->barang->satuan->nama ?? ''}}</td>
                     <td>@currency($item->harga_total)</td>
                 <tr>
                     @php
                         $total += $item->harga_total;
                     @endphp
                 @endforeach
-                <td colspan='4'>
+                <td colspan='5'>
                     <div style='text-align:right'>Total Yang Harus Di Bayar Adalah : </div>
                 </td>
                 <td style='text-align:left'>@currency($total)</td>

@@ -72,7 +72,7 @@ height: 37px !important;
                       <td>{{tgl($dt->penjualan->tanggal) ?? ''}}</td>
                       <td>{{$dt->barang->nama ?? ''}}</td>
                       <td>{{$dt->barang->kode_barang ?? ''}}</td>
-                      <td>{{$dt->jumlah ?? ''}}</td>
+                      <td>{{$dt->jumlah ?? ''}} {{$dt->barang->satuan->nama ?? ''}}</td>
                       <td>@currency($dt->harga_total/$dt->jumlah)</td>
                       <td>@currency($dt->harga_total)</td>
                     </tr>
